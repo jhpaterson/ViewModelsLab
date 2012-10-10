@@ -1,0 +1,17 @@
+﻿@using ViewModelsLab.Domain;
+
+@model IEnumerable<Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Orders</h2>
+<div>
+    <ul>
+    @foreach(Order o in Model)
+    {
+        <li>Order no @o.id - @Html.ActionLink("details","OrderDetail",new{id = o.id})</li>
+    }
+    </ul>
+</div>
