@@ -16,8 +16,6 @@ namespace ViewModelsLab.Controllers
             this.productRepository = productRepository;
         }
 
-        //
-        // GET: /Orders/
 
         public ActionResult Index()
         {
@@ -35,7 +33,20 @@ namespace ViewModelsLab.Controllers
                 return View("Index");
             }
 
-            // TODO: complete and return View with view model
+            // with AutoMapper - see configuration class in Mappings folder
+            OrderViewModel orvm = Mapper.Map<Order, OrderViewModel>(order);
+
+            // without AutoMapper
+            //OrderViewModel orvm = new OrderViewModel();
+            //orvm.id = order.id;
+            //orvm.CustomerName = order.Customer.Name;
+            //foreach (OrderLineItem oli in order.GetOrderLineItems())
+            //{
+            //    orvm.AddOrderLineItem(string.Format("{0}: Quantity - {1}", oli.Product.Name, oli.Quantity));
+            //}
+            //orvm.Total = order.GetTotal();
+
+            return View(orvm);
         }
 
         [HttpGet]
@@ -46,22 +57,40 @@ namespace ViewModelsLab.Controllers
                 return View("Index");
             }
 
-            // TODO: create view model for form and return View with view model
+            AddOrderLineItemViewModel aolivm =
+               new AddOrderLineItemViewModel
+               {
+                   OrderId = id.Value,
+                   ProductList = new SelectList(
+                       productRepository.GetAll(),
+                       "Name",
+                       "Name")
+               };
+            return View(aolivm);
         }
 
         [HttpPost]
-        public ActionResult AddItem()    // TODO: insert view model parameter for binding
+        public ActionResult AddItem(AddOrderLineItemViewModel aolivm)
         {
             if (ModelState.IsValid)
             {
-                // TODO: Get product and order from repositories using view model properties, and add product to order, then redirect to order detail
-               
+                var product = productRepository.Get(aolivm.ProductName);
+                var order = orderRepository.Get(aolivm.OrderId);
+
+                order.AddOrderLineItem(product, aolivm.Quantity.Value);
+
+                orderRepository.Save(order);
+
+                return RedirectToAction("OrderDetail", new { id = aolivm.OrderId });
             }
             else
             {
-                // TODO: update view model with products data and return View with view model
+                aolivm.ProductList = new SelectList(
+                       productRepository.GetAll(),
+                       "Name",
+                       "Name");
+                return View(aolivm);
             }
         }
-
     }
 }

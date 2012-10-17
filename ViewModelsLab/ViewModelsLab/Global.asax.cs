@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using ViewModelsLab.Data.Fake;
+using ViewModelsLab.Mapping;
 
 namespace ViewModelsLab
 {
@@ -22,6 +23,7 @@ namespace ViewModelsLab
             AuthConfig.RegisterAuth();
 
             FakeDataContext.SetupData();
+            AutoMapperConfiguration.Configure();
         }
     }
 }

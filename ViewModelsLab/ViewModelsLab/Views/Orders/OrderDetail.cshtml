@@ -1,9 +1,20 @@
-﻿
+﻿@model ViewModelsLab.Models.OrderViewModel
 
 @{
     ViewBag.Title = "OrderDetail";
 }
 
 <h2>Order Detail</h2>
-
-@*// TODO: Complete list *@
+<h3>@Html.DisplayNameFor(model=>model.id) @Model.id</h3>
+<p>@Html.DisplayNameFor(model=>model.CustomerName) @Model.CustomerName</p>
+<div>
+    <ul>
+    @foreach(string item in Model.OrderLineItems)
+    {
+        <li>@item</li>
+    }
+    </ul>
+</div>
+<p>@Html.DisplayNameFor(model=>model.Total) @string.Format("{0:c}", Model.Total)</p>
+<div>@Html.ActionLink("Add item to this order","AddItem",new{id=Model.id})</div>
+<div>@Html.ActionLink("Back to list","Index")</div>
