@@ -180,18 +180,19 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Data.Fake\OrderRepository.cs" />
-    <Compile Include="Data.Fake\ProductRepository.cs" />
+    <Compile Include="Data.EF\EFContext.cs" />
+    <Compile Include="Data.EF\OrderRepository.cs" />
+    <Compile Include="Data.EF\ProductRepository.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="Domain\Customer.cs" />
     <Compile Include="Domain\IOrderRepository.cs" />
     <Compile Include="Domain\IProductRepository.cs" />
+    <Compile Include="Domain\IUnitOfWork.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Domain\OrderLineItem.cs" />
     <Compile Include="Domain\Product.cs" />
-    <Compile Include="Data.Fake\FakeDataContext.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

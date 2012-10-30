@@ -1,34 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace ViewModelsLab.Domain
 {
     public class Order
     {
-        private readonly IList<OrderLineItem> _orderLineItems = new List<OrderLineItem>();
-
-        public IList<OrderLineItem> OrderLineItems
-        {
-            get { return _orderLineItems; }
-        } 
-
+        [Key]
         public int id { get; set; }
-
-        public Customer Customer { get; set; }
-
-        public OrderLineItem[] GetOrderLineItems()
-        {
-            return _orderLineItems.ToArray();
-        }
+        public virtual Customer Customer { get; set; }
+        public virtual List<OrderLineItem> OrderLineItems { get; set; }
 
         public void AddOrderLineItem(Product product, int quantity)
         {
-            _orderLineItems.Add(new OrderLineItem(product, quantity));
+            OrderLineItems.Add(new OrderLineItem { Product = product, Quantity = quantity });
         }
 
         public decimal GetTotal()
         {
-            return _orderLineItems.Sum(li => li.GetTotal());
+            return OrderLineItems.Sum(li => li.GetTotal());
         }
     }
 }

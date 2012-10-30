@@ -7,26 +7,26 @@ namespace ViewModelsLab.Controllers
 {
     public class OrdersController : Controller
     {
-        private IOrderRepository orderRepository;
-        private IProductRepository productRepository;
+        private IOrderRepository _orderRepository;
+        private IProductRepository _productRepository;
 
         public OrdersController(IOrderRepository orderRepository, IProductRepository productRepository)
         {
-            this.orderRepository = orderRepository;
-            this.productRepository = productRepository;
+            _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
 
         public ActionResult Index()
         {
-            var orders = orderRepository.GetAll();
+            var orders = _orderRepository.GetAll();
 
             return View(orders);
         }
 
         public ActionResult OrderDetail(int? id)
         {
-            var order = id != null ? orderRepository.Get(id.Value) : null;
+            var order = id != null ? _orderRepository.Get(id.Value) : null;
 
             if (order == null)
             {
@@ -40,7 +40,7 @@ namespace ViewModelsLab.Controllers
             //OrderViewModel orvm = new OrderViewModel();
             //orvm.id = order.id;
             //orvm.CustomerName = order.Customer.Name;
-            //foreach (OrderLineItem oli in order.GetOrderLineItems())
+            //foreach (OrderLineItem oli in order.OrderLineItems)
             //{
             //    orvm.AddOrderLineItem(string.Format("{0}: Quantity - {1}", oli.Product.Name, oli.Quantity));
             //}
@@ -62,7 +62,7 @@ namespace ViewModelsLab.Controllers
                {
                    OrderId = id.Value,
                    ProductList = new SelectList(
-                       productRepository.GetAll(),
+                       _productRepository.GetAll(),
                        "Name",
                        "Name")
                };
@@ -74,19 +74,19 @@ namespace ViewModelsLab.Controllers
         {
             if (ModelState.IsValid)
             {
-                var product = productRepository.Get(aolivm.ProductName);
-                var order = orderRepository.Get(aolivm.OrderId);
+                var product = _productRepository.Get(aolivm.ProductName);
+                var order = _orderRepository.Get(aolivm.OrderId);
 
                 order.AddOrderLineItem(product, aolivm.Quantity.Value);
 
-                orderRepository.Save(order);
+                _orderRepository.Save(order);
 
                 return RedirectToAction("OrderDetail", new { id = aolivm.OrderId });
             }
             else
             {
                 aolivm.ProductList = new SelectList(
-                       productRepository.GetAll(),
+                       _productRepository.GetAll(),
                        "Name",
                        "Name");
                 return View(aolivm);

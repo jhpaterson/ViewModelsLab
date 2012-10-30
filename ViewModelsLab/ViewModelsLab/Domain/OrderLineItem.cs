@@ -1,16 +1,13 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace ViewModelsLab.Domain
 {
     public class OrderLineItem
     {
-        public OrderLineItem(Product product, int quantity)
-        {
-            Product = product;
-            Quantity = quantity;
-        }
-
-        public Product Product { get; private set; }
-        public int Quantity { get; private set; }
+        [Key]
+        public int id { get; set; }
+        public virtual Product Product { get; set; }
+        public int Quantity { get; set; }
 
         public decimal GetTotal()
         {

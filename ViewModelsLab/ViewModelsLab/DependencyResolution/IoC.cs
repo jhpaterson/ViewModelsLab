@@ -27,10 +27,12 @@ namespace ViewModelsLab.DependencyResolution {
                                         scan.TheCallingAssembly();
                                         scan.WithDefaultConventions();
                                     });
+                            x.For<ViewModelsLab.Domain.IUnitOfWork>().HttpContextScoped()
+                                .Use<ViewModelsLab.Data.EF.EFContext>();
                             x.For<ViewModelsLab.Domain.IOrderRepository>()
-                                .Use<ViewModelsLab.Data.Fake.OrderRepository>();
+                                .Use<ViewModelsLab.Data.EF.OrderRepository>();
                             x.For<ViewModelsLab.Domain.IProductRepository>()
-                                .Use<ViewModelsLab.Data.Fake.ProductRepository>();
+                                .Use<ViewModelsLab.Data.EF.ProductRepository>();
                         });
             return ObjectFactory.Container;
         }
