@@ -79,7 +79,7 @@ namespace ViewModelsLab.Controllers
 
                 order.AddOrderLineItem(product, aolivm.Quantity.Value);
 
-                _orderRepository.Save(order);
+                _orderRepository.Update(order);
 
                 return RedirectToAction("OrderDetail", new { id = aolivm.OrderId });
             }

@@ -9,7 +9,8 @@ namespace ViewModelsLab.Domain
 
         Order Get(int id);
 
-        void Save(Order order);
+        void Add(Order order);
 
+        void Update(Order order);
     }
 }

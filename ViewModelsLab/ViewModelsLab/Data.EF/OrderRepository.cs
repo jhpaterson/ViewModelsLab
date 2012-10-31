@@ -31,12 +31,14 @@ namespace ViewModelsLab.Data.EF
             //        .Where(o => o.id == id).FirstOrDefault();
         }
 
-        public void Save(Order order)
+        public void Add(Order order)
         {
-            if (order.id <= 0)
-            {
-                _unitOfWork.Orders.Add(order);
-            }
+            _unitOfWork.Orders.Add(order);
+            _unitOfWork.SaveChanges();
+        }
+
+        public void Update(Order order)
+        {
             _unitOfWork.SaveChanges();
         }
 
