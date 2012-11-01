@@ -11,13 +11,10 @@ namespace ViewModelsLab.Data.EF
     /// </summary>
     public class EFContext : DbContext, IUnitOfWork
     {
-        private int _identifier;   // just to demonstrate per request instantiation
-
         public EFContext()
             : base("name = efcontext")
         { 
             this.Configuration.LazyLoadingEnabled = true;
-            _identifier = new Random().Next(1000);
         }
 
         public DbSet<Product> Products { get; set; }

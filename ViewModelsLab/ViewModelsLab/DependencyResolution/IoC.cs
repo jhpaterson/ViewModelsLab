@@ -27,7 +27,7 @@ namespace ViewModelsLab.DependencyResolution {
                                         scan.TheCallingAssembly();
                                         scan.WithDefaultConventions();
                                     });
-                            x.For<ViewModelsLab.Domain.IUnitOfWork>().HttpContextScoped()
+                            x.For<ViewModelsLab.Domain.IUnitOfWork>().HttpContextScoped()    // AlwaysUnique() will cause the two repos to have different context objects, will lead to storing duplicate Product objects
                                 .Use<ViewModelsLab.Data.EF.EFContext>();
                             x.For<ViewModelsLab.Domain.IOrderRepository>()
                                 .Use<ViewModelsLab.Data.EF.OrderRepository>();
